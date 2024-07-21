@@ -1,3 +1,4 @@
+import 'react-loading-skeleton/dist/skeleton.css'
 import { useMemo } from "react";
 import { useTasksQuery } from "../../queries/useTasksQuery";
 import { TaskBoardData, TaskPage } from "./TaskPage";
