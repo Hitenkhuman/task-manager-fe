@@ -27,7 +27,9 @@ export const TaskList = ({
         {...provided.droppableProps}
         ref={provided.innerRef}
       >
-        <h2 className="font-bold mb-2 text-lg">{status.toUpperCase()}</h2>
+        <h2 className="font-bold mb-2 text-lg">
+          {status.split("_").join(" ").toUpperCase()}
+        </h2>
         {tasks.map((task, index) => (
           <TaskItem
             task={{

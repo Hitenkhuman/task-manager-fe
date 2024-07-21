@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { Modal } from "./Modal";
 import { Button } from "../buttons/Button";
 
@@ -19,8 +19,8 @@ const FormModal: React.FC<FormModalProps> = ({
 }) => {
   const {
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm();
+    formState: { isSubmitting, isDirty },
+  } = useFormContext();
 
   return (
     <Modal
@@ -34,8 +34,10 @@ const FormModal: React.FC<FormModalProps> = ({
           </Button>
           <Button
             onClick={handleSubmit(onSubmit)}
-            disabled={isSubmitting}
-            className={isSubmitting ? "opacity-50 cursor-not-allowed" : ""}
+            disabled={isSubmitting || !isDirty}
+            className={
+              isSubmitting || !isDirty ? "opacity-50 cursor-not-allowed" : ""
+            }
           >
             Submit
           </Button>

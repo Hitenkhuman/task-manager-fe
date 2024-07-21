@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { TaskList } from "../../components/taskList/TaskList";
@@ -10,7 +11,8 @@ import { useUpdateTaskMutation } from "../../queries/useUpdateTaskMutation";
 import { useDeleteTaskMutation } from "../../queries/useDeleteTaskMutation";
 import { toast } from "react-toastify";
 import { useTaskStatusMutation } from "../../queries/useTaskStatusMutation";
-
+import keys from "../../queries/keys";
+import { useQueryClient } from "react-query";
 export type TaskBoardData = {
   [key: string]: Task[];
 };
@@ -31,6 +33,7 @@ export const TaskPage: React.FC<TaskPageProps> = ({
   const updateTaskMutation = useUpdateTaskMutation();
   const deleteTaskMutation = useDeleteTaskMutation();
   const taskStatusMutation = useTaskStatusMutation();
+  const queryClient = useQueryClient()
 
   const onDelete = (task: Task) => {
     setSelectedTask(task);
@@ -61,6 +64,7 @@ export const TaskPage: React.FC<TaskPageProps> = ({
         onSuccess: () => {
           onClose();
           toast.success("Task updated successfully");
+          queryClient.invalidateQueries(keys.tasks)
         },
         onError: (error: any) => {
           if (error?.response?.data?.message) {
@@ -82,6 +86,7 @@ export const TaskPage: React.FC<TaskPageProps> = ({
         onSuccess: () => {
           onClose();
           toast.success("Task deleted successfully");
+          queryClient.invalidateQueries(keys.tasks)
         },
         onError: (error: any) => {
           if (error?.response?.data?.message) {
