@@ -1,55 +1,15 @@
 import React from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import TaskList from "../../components/taskList/TaskList";
+import { TaskList } from "../../components/taskList/TaskList";
 import { CreateTaskButton } from "./CreateTaskButton";
 import { Task } from "../../interfaces/Task";
-import TaskFormModal, { TaskFormOutput } from "./TaskFormModal";
+import { TaskFormOutput, TaskFormModal } from "./TaskFormModal";
 import ConfirmModal from "../../components/modals/ConfirmModal";
-import ViewModal from "../../components/modals/ViewModal";
-import { useTasksQuery } from "../../queries/useTasksQuery";
+import { ViewModal } from "../../components/modals/ViewModal";
 import { useUpdateTaskMutation } from "../../queries/useUpdateTaskMutation";
 import { useDeleteTaskMutation } from "../../queries/useDeleteTaskMutation";
 import { toast } from "react-toastify";
 import { useTaskStatusMutation } from "../../queries/useTaskStatusMutation";
-
-// const initialTasks = {
-//   todo: [
-//     {
-//       id: "task-1",
-//       title: "Task 1",
-//       description: "Task 1 description",
-//       createdAt: "2021-09-01",
-//     },
-//     {
-//       id: "task-2",
-//       title: "Task 2",
-//       description: "Task 2 description",
-//       createdAt: "2021-09-02",
-//     },
-//     {
-//       id: "task-7",
-//       title: "Task3",
-//       description: "Task 2 description",
-//       createdAt: "2021-09-02",
-//     },
-//   ],
-//   inprogress: [
-//     {
-//       id: "task-3",
-//       title: "Task 3",
-//       description: "Task 3 description",
-//       createdAt: "2021-09-03",
-//     },
-//   ],
-//   done: [
-//     {
-//       id: "task-4",
-//       title: "Task 4",
-//       description: "Task 4 description",
-//       createdAt: "2021-09-04",
-//     },
-//   ],
-// };
 
 export type TaskBoardData = {
   [key: string]: Task[];
@@ -59,7 +19,9 @@ type TaskPageProps = {
   board: TaskBoardData;
 };
 
-export function TaskPage({ board }: Readonly<TaskPageProps>) {
+export const TaskPage: React.FC<TaskPageProps> = ({
+  board,
+}: Readonly<TaskPageProps>) => {
   const [tasks, setTasks] = React.useState<TaskBoardData>(board);
   const [selectedTask, setSelectedTask] = React.useState<Task | null>(null);
   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
@@ -101,7 +63,11 @@ export function TaskPage({ board }: Readonly<TaskPageProps>) {
           toast.success("Task updated successfully");
         },
         onError: (error: any) => {
-          toast.error(error.response.data.message);
+          if (error?.response?.data?.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error(error?.message ?? "Failed to update task");
+          }
         },
       }
     );
@@ -118,7 +84,11 @@ export function TaskPage({ board }: Readonly<TaskPageProps>) {
           toast.success("Task deleted successfully");
         },
         onError: (error: any) => {
-          toast.error(error.response.data.message);
+          if (error?.response?.data?.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error(error?.message ?? "Failed to delete task");
+          }
         },
       }
     );
@@ -184,7 +154,11 @@ export function TaskPage({ board }: Readonly<TaskPageProps>) {
         },
         {
           onError: (error: any) => {
-            toast.error(error.response.data.message);
+            if (error?.response?.data?.message) {
+              toast.error(error.response.data.message);
+            } else {
+              toast.error(error?.message ?? "Failed to save changes..");
+            }
           },
         }
       );
@@ -251,4 +225,4 @@ export function TaskPage({ board }: Readonly<TaskPageProps>) {
       )}
     </>
   );
-}
+};

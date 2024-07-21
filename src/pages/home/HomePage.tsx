@@ -1,21 +1,10 @@
-import React, { useMemo } from "react";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import TaskList from "../../components/taskList/TaskList";
-import { CreateTaskButton } from "./CreateTaskButton";
-import { Task } from "../../interfaces/Task";
-import TaskFormModal, { TaskFormOutput } from "./TaskFormModal";
-import ConfirmModal from "../../components/modals/ConfirmModal";
-import ViewModal from "../../components/modals/ViewModal";
+import { useMemo } from "react";
 import { useTasksQuery } from "../../queries/useTasksQuery";
-import { useUpdateTaskMutation } from "../../queries/useUpdateTaskMutation";
-import { useDeleteTaskMutation } from "../../queries/useDeleteTaskMutation";
-import { toast } from "react-toastify";
 import { TaskBoardData, TaskPage } from "./TaskPage";
 import { TASK_STATUS } from "../../constants";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
-function HomePage() {
+export const HomePage: React.FC = () => {
   const taskQUery = useTasksQuery();
 
   const boardData = useMemo(() => {
@@ -46,6 +35,4 @@ function HomePage() {
   }
 
   return <TaskPage board={boardData} />;
-}
-
-export default HomePage;
+};

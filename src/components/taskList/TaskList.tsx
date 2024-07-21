@@ -1,5 +1,5 @@
 import { Droppable } from "react-beautiful-dnd";
-import TaskItem from "../task/TaskItem";
+import { TaskItem } from "../task/TaskItem";
 import { Task } from "../../interfaces/Task";
 import dayjs from "dayjs";
 
@@ -11,14 +11,14 @@ interface TaskListProps {
   onView: (task: Task) => void;
 }
 
-const TaskList = ({
+export const TaskList = ({
   status,
   tasks,
   onDelete,
   onUpdate,
   onView,
 }: Readonly<TaskListProps>) => (
-  <Droppable droppableId={status}>
+  <Droppable droppableId={status} key={status}>
     {(provided, snapshot) => (
       <div
         className={`bg-gray-200 p-4 rounded min-h-max ${
@@ -45,5 +45,3 @@ const TaskList = ({
     )}
   </Droppable>
 );
-
-export default TaskList;

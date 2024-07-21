@@ -1,10 +1,10 @@
 import React from "react";
-import TaskFormModal, { TaskFormOutput } from "./TaskFormModal";
+import { TaskFormOutput, TaskFormModal } from "./TaskFormModal";
 import { Button } from "../../components/buttons/Button";
 import { useCreateTaskMutation } from "../../queries/useCreateTaskMutation";
 import { toast } from "react-toastify";
 
-export function CreateTaskButton(): React.JSX.Element {
+export const CreateTaskButton: React.FC = () => {
   const [showModal, setShowModal] = React.useState(false);
   const createTaskMutation = useCreateTaskMutation();
 
@@ -15,7 +15,11 @@ export function CreateTaskButton(): React.JSX.Element {
         toast.success("Task created successfully");
       },
       onError: (error: any) => {
-        toast.error(error.response.data.message);
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(error?.message ?? "Failed to create task");
+        }
       },
     });
   };
@@ -31,4 +35,4 @@ export function CreateTaskButton(): React.JSX.Element {
       )}
     </div>
   );
-}
+};

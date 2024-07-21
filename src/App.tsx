@@ -4,13 +4,15 @@ import { Navbar } from "./pages/navbar/Navbar";
 import { Login } from "./pages/auth/login/Login";
 import { Signup } from "./pages/auth/signup/Signup";
 import { RouteUrls } from "./RouteUrls";
-import HomePage from "./pages/home/HomePage";
+import { HomePage } from "./pages/home/HomePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PrivateRoute from "./components/RestrictedRoutes/PrivateRoute";
 import AuthRoute from "./components/RestrictedRoutes/AuthRoute";
 import { AuthProvider } from "./providers/AuthProvider";
 import { Logout } from "./pages/auth/logout/Logout";
 import { ToastContainer, toast } from "react-toastify";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./components/errors/ErrorPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,14 +25,12 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <div className="App">
+    <ErrorBoundary key="root" fallbackRender={ErrorFallback}>
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <ToastContainer />
             <Navbar />
-
-            {/* Pages with routes */}
             <Routes>
               <Route
                 path={RouteUrls.HOME}
@@ -39,19 +39,17 @@ function App() {
               <Route
                 path={RouteUrls.LOGIN}
                 element={<AuthRoute element={<Login />} />}
-                // element={<Login />}
               />
               <Route
                 path={RouteUrls.SIGNUP}
                 element={<AuthRoute element={<Signup />} />}
-                // element={<Signup />}
               />
               <Route path={RouteUrls.LOGOUT} element={<Logout />} />
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
       </AuthProvider>
-    </div>
+    </ErrorBoundary>
   );
 }
 

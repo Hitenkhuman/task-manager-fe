@@ -3,7 +3,10 @@ export const API_URL = process.env.REACT_APP_API_URL;
 export const AUTH_ENDPOINT = {
     LOGIN: `/auth/login`,
     SIGNUP: `/auth/signup`,
+    GOOGLE_AUTH: `/auth/google`,
 }
+
+export const GOOGLE_CLIENT_KEY = process.env.REACT_APP_GOOGLE_CLIENT_KEY ?? '';
 
 export const TASK_ENDPOINT = {
     GET_ALL: `/task`,

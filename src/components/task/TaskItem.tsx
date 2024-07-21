@@ -13,7 +13,7 @@ interface TaskItemProps {
   onView: (task: Task) => void;
 }
 
-const TaskItem = ({
+export const TaskItem = ({
   task,
   index,
   onUpdate,
@@ -29,6 +29,7 @@ const TaskItem = ({
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
+        key={task._id}
       >
         <div className="flex flex-col space-y-2">
           <div>
@@ -81,5 +82,3 @@ const TaskItem = ({
     )}
   </Draggable>
 );
-
-export default TaskItem;

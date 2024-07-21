@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { GoogleAuthButton } from "../googleAuth/GoogleAuthButton";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -39,7 +40,11 @@ export const Login: React.FC = () => {
       await login(data.email, sha256(data.password));
       navigate(RouteUrls.HOME);
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error?.message ?? "Failed to login");
+      }
     }
   };
 
@@ -90,7 +95,9 @@ export const Login: React.FC = () => {
             Signup
           </NavLink>
         </div>
-        <Button className="w-full">Login with Google</Button>
+        <div className="flex justify-center">
+          <GoogleAuthButton />
+        </div>
       </div>
     </div>
   );

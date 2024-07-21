@@ -9,7 +9,7 @@ interface ViewModalProps {
   body: React.ReactNode;
 }
 
-const ViewModal: React.FC<ViewModalProps> = ({
+export const ViewModal: React.FC<ViewModalProps> = ({
   isOpen,
   onClose,
   title,
@@ -28,5 +28,3 @@ const ViewModal: React.FC<ViewModalProps> = ({
     />
   );
 };
-
-export default ViewModal;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../../../components/buttons/Button";
 import { RouteUrls } from "../../../RouteUrls";
 import { z } from "zod";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { sha256 } from "js-sha256";
 import { toast } from "react-toastify";
+import { GoogleAuthButton } from "../googleAuth/GoogleAuthButton";
 
 const signupSchema = z
   .object({
@@ -58,7 +59,11 @@ export const Signup: React.FC = () => {
       });
       navigate(RouteUrls.HOME);
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error?.message ?? "Failed to sigup");
+      }
     }
   };
 
@@ -153,7 +158,9 @@ export const Signup: React.FC = () => {
             Login
           </NavLink>
         </div>
-        <Button className="w-full">Sign Up with Google</Button>
+        <div className="flex justify-center">
+          <GoogleAuthButton />
+        </div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ interface TaskFormModalProps {
   task?: Task;
 }
 
-const TaskFormModal: React.FC<TaskFormModalProps> = ({
+export const TaskFormModal: React.FC<TaskFormModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
@@ -84,5 +84,3 @@ const TaskFormModal: React.FC<TaskFormModalProps> = ({
     </FormModal>
   );
 };
-
-export default TaskFormModal;

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/icons/logo.png";
 import { RouteUrls } from "../../RouteUrls";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-export function Navbar(): React.JSX.Element {
+export const Navbar: React.FC = () => {
   const { currentUser } = useAuthContext();
   const location = useLocation();
 
@@ -55,4 +55,4 @@ export function Navbar(): React.JSX.Element {
       </div>
     </nav>
   );
-}
+};
